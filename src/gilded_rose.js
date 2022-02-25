@@ -1,5 +1,5 @@
 class Shop {
-  constructor(items=[]) {
+constructor(items=[]) {
     this.items = items;
   }
 
@@ -7,53 +7,47 @@ class Shop {
     for (let i = 0; i < this.items.length; i++) {
       let itemName = this.items[i].name;
       let itemQuality = this.items[i].quality;
-      
-      if (itemName == "Sulfuras, Hand of Ragnaros") {
-        break;
-      }
-      
+
+      if (itemName == "Sulfuras, Hand of Ragnaros") { break }
+
       this.items[i].sellIn -= 1;
       let itemSellIn = this.items[i].sellIn;
 
-      switch (itemName) {
-        case "Aged Brie":
-          if (itemQuality < 50) {
+      if (itemQuality < 50) {
+        switch (itemName) {
+          case "Aged Brie":
             this.items[i].quality += 1;
-            
+
             if (itemSellIn < 0) {
               this.items[i].quality += 1;
             }
-            
-            this.items[i].sellIn -= 1;
+
             break;
-          }
-        case "Backstage passes to a TAFKAL80ETC concert":
-          if (itemQuality < 50) {
-            if (this.items[i].sellIn >= 0) {
-              if (this.items[i].sellIn < 11) {
-                this.items[i].quality += 1;
-              }
-              
-              if (this.items[i].sellIn < 6) {
+          case "Backstage passes to a TAFKAL80ETC concert":
+            if (itemSellIn >= 0) {
+              this.items[i].quality += 1
+
+              if (itemSellIn < 11) {
                 this.items[i].quality += 1;
               }
 
-              this.items[i].quality += 1
+              if (itemSellIn < 6) {
+                this.items[i].quality += 1;
+              }
             } else {
               this.items[i].quality = 0;
             }
-            
-            this.items[i].sellIn -= 1;
+
             break;
-          }
-        default:
-          if (itemQuality > 0) {
-            if (this.items[i].sellIn > 0) {
-              this.items[i].quality -= 1;
-            } else {
-              this.items[i].quality -= 2;
+          default:
+            if (itemQuality > 0) {
+              if (itemSellIn > 0) {
+                this.items[i].quality -= 1;
+              } else {
+                this.items[i].quality -= 2;
+              }
             }
-          }
+        }
       }
     }
 

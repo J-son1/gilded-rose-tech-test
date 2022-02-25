@@ -1,6 +1,6 @@
 const Shop = require("../src/gilded_rose");
 
-let shop, item, item2, agedBrie, sulfuras, items;
+let shop, item, item2, item3, agedBrie, sulfuras, items;
 beforeEach(() => {
   // Normal item
   item = { name: "item", sellIn: 5, quality: 7 }
@@ -32,7 +32,7 @@ describe("Gilded Rose", function() {
       expect(items[0].quality).toBeLessThan(7);
     });
 
-    it("lowers the 'sell in' value", () => {
+    it("lowers the 'sell in' value by 1", () => {
       expect(items[0].sellIn).toBe(4);
     });
 
@@ -47,6 +47,12 @@ describe("Gilded Rose", function() {
         shop = new Shop([agedBrie]);
         items = shop.updateQuality();
         expect(items[0].quality).toBeGreaterThan(10)
+      });
+
+      it("lowers the 'sell in' value by 1", () => {
+        shop = new Shop([agedBrie]);
+        items = shop.updateQuality();
+        expect(items[0].sellIn).toBe(-1)
       });
     })
 
@@ -70,6 +76,13 @@ describe("Gilded Rose", function() {
         shop = new Shop([backstagePasses]);
         items = shop.updateQuality();
         expect(items[0].quality).toBe(0)
+      });
+
+      it("lowers the 'sell in' value by 1", () => {
+        backstagePasses = { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 7 }
+        shop = new Shop([backstagePasses]);
+        items = shop.updateQuality();
+        expect(items[0].sellIn).toBe(9)
       });
     });
 

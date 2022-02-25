@@ -51,14 +51,14 @@ describe("Gilded Rose", function() {
     })
 
     describe("receiving 'Backstage passes'", () => {
-      it("increases the quality by 2 if the 'sell in' value is <= 10", () => {
+      it("increases the quality by 2 if the 'sell in' value is < 11", () => {
         backstagePasses = { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 7 }
         shop = new Shop([backstagePasses]);
         items = shop.updateQuality();
         expect(items[0].quality).toBe(9)
       });
 
-      it("increases the quality by 3 if the 'sell in' value is <= 5", () => {
+      it("increases the quality by 3 if the 'sell in' value is < 6", () => {
         backstagePasses = { name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 7 }
         shop = new Shop([backstagePasses]);
         items = shop.updateQuality();

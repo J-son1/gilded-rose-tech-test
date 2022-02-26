@@ -4,54 +4,65 @@ constructor(items=[]) {
   }
 
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      let itemName = this.items[i].name;
-      let itemQuality = this.items[i].quality;
+    this.items.forEach(item => {
+      if (item.name == "Sulfuras, Hand of Ragnaros") { return }
 
-      if (itemName == "Sulfuras, Hand of Ragnaros") { break }
+      item.sellIn -= 1;
 
-      this.items[i].sellIn -= 1;
-      let itemSellIn = this.items[i].sellIn;
-
-      if (itemQuality < 50) {
-        switch (itemName) {
+      if (item.quality < 50) {
+        switch (item.name) {
           case "Aged Brie":
-            this.items[i].quality += 1;
-
-            if (itemSellIn < 0) {
-              this.items[i].quality += 1;
-            }
-
+            item = this._updateItem(item);
             break;
           case "Backstage passes to a TAFKAL80ETC concert":
-            if (itemSellIn >= 0) {
-              this.items[i].quality += 1
-
-              if (itemSellIn < 11) {
-                this.items[i].quality += 1;
-              }
-
-              if (itemSellIn < 6) {
-                this.items[i].quality += 1;
-              }
-            } else {
-              this.items[i].quality = 0;
-            }
-
+            item = this._updateItem(item);
             break;
           default:
-            if (itemQuality > 0) {
-              if (itemSellIn > 0) {
-                this.items[i].quality -= 1;
-              } else {
-                this.items[i].quality -= 2;
-              }
-            }
+            item = this._updateItem(item);
         }
       }
-    }
+    });
 
     return this.items;
+  }
+
+  _updateItem(item) {
+    switch (item.name) {
+      case "Aged Brie":
+        item.quality += 1;
+
+        if (item.sellIn < 0) {
+          item.quality += 1;
+        }
+
+        break;
+      case "Backstage passes to a TAFKAL80ETC concert":
+        if (item.sellIn >= 0) {
+          item.quality += 1
+
+          if (item.sellIn < 11) {
+            item.quality += 1;
+          }
+
+          if (item.sellIn < 6) {
+            item.quality += 1;
+          }
+        } else {
+          item.quality = 0;
+        }
+
+        break;
+      default:
+        if (item.quality > 0) {
+          if (item.sellIn > 0) {
+            item.quality -= 1;
+          } else {
+            item.quality -= 2;
+          }
+        }
+    }
+
+    return item;
   }
 }
 

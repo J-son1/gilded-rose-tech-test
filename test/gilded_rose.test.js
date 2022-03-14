@@ -1,13 +1,13 @@
 const Shop = require("../src/gilded_rose");
 
-let shop, item, item2, item3, agedBrie, sulfuras, items;
+let shop, item, foo, bar, agedBrie, sulfuras, items;
 beforeEach(() => {
   // Normal item
   item = { name: "item", sellIn: 5, quality: 7 }
   // Item with qulity = 0
-  item2 = { name: "foo", sellIn: 0, quality: 0 }
+  foo = { name: "foo", sellIn: 0, quality: 0 }
   // Item past the 'sell in' date
-  item3 = { name: "bar", sellIn: 0, quality: 9 }
+  bar = { name: "bar", sellIn: 0, quality: 9 }
   agedBrie = { name: "Aged Brie", sellIn: 0, quality: 10 }
   sulfuras = { name: "Sulfuras, Hand of Ragnaros", sellIn: 0, quality: 10 }
   shop = new Shop([item]);
@@ -17,13 +17,13 @@ beforeEach(() => {
 describe("Gilded Rose", function() {
   describe("updateQuality", () => {
     it("should foo", function() {
-      const gildedRose = new Shop([item2]);
+      const gildedRose = new Shop([foo]);
       const items = gildedRose.updateQuality();
       expect(items[0].name).toBe("foo");
     });
 
     it("does not lower an item's quality value below 0", () => {
-      shop = new Shop([item2]);
+      shop = new Shop([foo]);
       items = shop.updateQuality();
       expect(items[0].quality).toBe(0);
     });
@@ -37,7 +37,7 @@ describe("Gilded Rose", function() {
     });
 
     it("decreases quality twice as fast if the item has passed the sell by date", () => {
-      shop = new Shop([item3]);
+      shop = new Shop([bar]);
       items = shop.updateQuality();
       expect(items[0].quality).toBe(7)
     });

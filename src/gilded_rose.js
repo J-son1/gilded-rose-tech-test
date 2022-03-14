@@ -12,13 +12,13 @@ constructor(items=[]) {
       if (item.quality < 50) {
         switch (item.name) {
           case "Aged Brie":
-            item = this._updateItem(item);
+            this._updateAgedBrie(item);
             break;
           case "Backstage passes to a TAFKAL80ETC concert":
-            item = this._updateItem(item);
+            this._updateBackstagePasses(item);
             break;
           default:
-            item = this._updateItem(item);
+            this._updateItem(item);
         }
       }
     });
@@ -26,43 +26,35 @@ constructor(items=[]) {
     return this.items;
   }
 
-  _updateItem(item) {
-    switch (item.name) {
-      case "Aged Brie":
-        item.quality += 1;
-
-        if (item.sellIn < 0) {
-          item.quality += 1;
-        }
-
-        break;
-      case "Backstage passes to a TAFKAL80ETC concert":
-        if (item.sellIn >= 0) {
-          item.quality += 1
-
-          if (item.sellIn < 11) {
-            item.quality += 1;
-          }
-
-          if (item.sellIn < 6) {
-            item.quality += 1;
-          }
-        } else {
-          item.quality = 0;
-        }
-
-        break;
-      default:
-        if (item.quality > 0) {
-          if (item.sellIn > 0) {
-            item.quality -= 1;
-          } else {
-            item.quality -= 2;
-          }
-        }
+  _updateAgedBrie(item) {
+    item.quality += 1;
+    if (item.sellIn < 0) {
+      item.quality += 1;
     }
+  }
 
-    return item;
+  _updateBackstagePasses(item) {
+    if (item.sellIn >= 0) {
+      item.quality += 1
+      if (item.sellIn < 11) {
+        item.quality += 1;
+      }
+      if (item.sellIn < 6) {
+        item.quality += 1;
+      }
+    } else {
+      item.quality = 0;
+    }
+  }
+
+  _updateItem(item) {
+    if (item.quality > 0) {
+      if (item.sellIn > 0) {
+        item.quality -= 1;
+      } else {
+        item.quality -= 2;
+      }
+    }
   }
 }
 

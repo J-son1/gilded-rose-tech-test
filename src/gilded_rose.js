@@ -9,7 +9,7 @@ class Shop {
 
   updateQuality() {
     this.items.forEach(item => {
-      if (item.name == "Sulfuras, Hand of Ragnaros") { return }
+      if (item.name == "Sulfuras, Hand of Ragnaros") { return; }
 
       item.sellIn -= 1;
 

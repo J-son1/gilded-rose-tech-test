@@ -75,7 +75,7 @@ Refactor the code in such a way that adding the new "conjured" functionality is 
 
 ## Approach
 
-I started by looking at the specification and the file contents to understand what the code was supposed to do. The next thing to be done was to write tests to cover all of the functionality of the code so that any changes I made while refactoring could then be found more easily if the code stopped producing the correct results. After making the necessary base tests, the code could then be refactored and test could be added where appropriate. I could then start with refactoring the code by shinking any bits of code that could be written in a more succinct way to make it more readable. I used comments to keep track of what the code was doing and see there was any repitition that could be reduced. I then thought that I could use a similar structure for updating items that the existing 'updateQuality' method used. However, I decided that separating conditions depending on the item would create clearer code. The conditions for each item could then be extracted out for even better readablity. I also thought this would make adding, modifying or removing item condition easier.
+I started by looking at the specification and the file contents to understand what the code was supposed to do. The next thing was to write tests to cover all of the functionality of the code so that any changes I made while refactoring could then be found more easily if the code stopped producing the correct results. After making the necessary base tests, the code could then be refactored and tests could be added where appropriate. Then I would start refactoring the code by reducing the length of any bits of code that could be written in a more succinct way to make it more readable. I used comments to keep track of what the code was doing and to see if there was any repitition that could be reduced. I then thought that I could use a similar structure for updating items that the existing 'updateQuality' method used. However, I decided that separating conditions depending on the item would create clearer code. The conditions for each item could then be extracted out for better readablity, which I thought would make adding, modifying or removing item conditions easier.
 
 ### Decisions
 
@@ -106,18 +106,18 @@ I started by looking at the specification and the file contents to understand wh
     depending on an items rate of degredation.
     This was also done in hopes that the code would be more
     readable. For instance, if an item degrades twice as
-    fast as a normal item then you'd ruduce its quality
-    by the 'normal degredation value' varible * 2.
+    fast as a normal item then you could ruduce its quality
+    by the `standard_degredation_value * 2`.
 - I opted for increasing the lines of code for better code readabilty
   and to make it easy to add, edit or remove parts of code where needed.
 
 #### Code modification
 
-- Including both 'if' and 'switch' statements to update differnent
+- Including both 'if' and 'switch' statements to update different
   items would allow the code to be placed in either conditional 
   depending on which better suits an item's properties.
 - If someone wanted to add an item, the idea was that the simplest
-  way to do that would be to create a private method with its
+  way to do that would be to create a private method which held its
   required conditions and then easily add it to the 'updateQuality' method.
   - An issue with making individual private methods for certain items
     is that items that use the same conditional statements can't be
@@ -141,6 +141,8 @@ I started by looking at the specification and the file contents to understand wh
   be easily read and changed.
 - Perhaps I could have come up with other ways to check if an item was
   'conjured' and maybe also added more tests for these types of items.
+
+---
 
 ### Testing
 

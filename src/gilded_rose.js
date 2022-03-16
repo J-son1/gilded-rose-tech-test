@@ -1,6 +1,10 @@
 class Shop {
-constructor(items=[]) {
+  
+  constructor(items=[]) {
     this.items = items;
+    this._decreaseQualityValue = 1;
+    this._increaseQaulityValue = 1;
+    this._conjuredItemPatt = new RegExp("conjured", "i");
   }
 
   updateQuality() {
@@ -10,15 +14,19 @@ constructor(items=[]) {
       item.sellIn -= 1;
 
       if (item.quality < 50) {
-        switch (item.name) {
-          case "Aged Brie":
-            this._updateAgedBrie(item);
-            break;
-          case "Backstage passes to a TAFKAL80ETC concert":
-            this._updateBackstagePasses(item);
-            break;
-          default:
-            this._updateItem(item);
+        if (this._conjuredItemPatt.test(item.name)) {
+          this._updateConjuredItem(item);
+        } else {
+          switch (item.name) {
+            case "Aged Brie":
+              this._updateAgedBrie(item);
+              break;
+            case "Backstage passes to a TAFKAL80ETC concert":
+              this._updateBackstagePasses(item);
+              break;
+            default:
+              this._updateItem(item);
+          }
         }
       }
     });
@@ -27,20 +35,20 @@ constructor(items=[]) {
   }
 
   _updateAgedBrie(item) {
-    item.quality += 1;
+    item.quality += this._increaseQaulityValue;
     if (item.sellIn < 0) {
-      item.quality += 1;
+      item.quality += this._increaseQaulityValue;
     }
   }
 
   _updateBackstagePasses(item) {
     if (item.sellIn >= 0) {
-      item.quality += 1
+      item.quality += this._increaseQaulityValue;
       if (item.sellIn < 11) {
-        item.quality += 1;
+        item.quality += this._increaseQaulityValue;
       }
       if (item.sellIn < 6) {
-        item.quality += 1;
+        item.quality += this._increaseQaulityValue;
       }
     } else {
       item.quality = 0;
@@ -50,11 +58,15 @@ constructor(items=[]) {
   _updateItem(item) {
     if (item.quality > 0) {
       if (item.sellIn > 0) {
-        item.quality -= 1;
+        item.quality -= this._decreaseQualityValue;
       } else {
-        item.quality -= 2;
+        item.quality -= this._decreaseQualityValue * 2;
       }
     }
+  }
+
+  _updateConjuredItem(item) {
+    item.quality -= this._decreaseQualityValue * 2;
   }
 }
 
